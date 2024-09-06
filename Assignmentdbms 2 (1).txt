@@ -1,0 +1,750 @@
+Assignment -2
+Name - Rahul kumar Chaudhary
+
+Roll-No- 2021ITB074
+
+
+SQL> Create Table Branch (B_name varchar(10) Primary Key, 
+City varchar(10) Check (City in ('Delhi','Kolkata','Mumbai')));
+
+
+
+mysql> desc branch;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| B_name | varchar(10) | NO   | PRI | NULL    |       |
+| City   | varchar(10) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+2 rows in set (0.02 sec)
+Table created.
+
+SQL> create table Customer(C_name varchar(10) Primary key Check(C_name=upper(c_name)),City varchar(10) Not Null);
+
+Table created.
+
+
+mysql> desc customer;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| C_name | varchar(10) | NO   | PRI | NULL    |       |
+| City   | varchar(10) | NO   |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+
+SQL> create table Borrow (Acc_no varchar(10) Primary Key ,C_name varchar(10),B_name varchar(10),
+Amount decimal(8,2) check (amount>1000),Foreign key (C_name) References Customer (C_name),Foreign key (B_name) references Branch(B_name));
+
+Table created.
+
+mysql> desc borrow;
++---------+--------------+------+-----+---------+-------+
+| Field   | Type         | Null | Key | Default | Extra |
++---------+--------------+------+-----+---------+-------+
+| Loan_No | varchar(10)  | NO   | PRI | NULL    |       |
+| C_Name  | varchar(10)  | YES  | MUL | NULL    |       |
+| B_Name  | varchar(10)  | YES  | MUL | NULL    |       |
+| amount  | decimal(8,2) | YES  |     | NULL    |       |
++---------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+
+
+SQL> create Table Deposit (Acc_no varchar(10) Primary Key,C_name varchar(10),B_name varchar(10),
+Amount Decimal(8,2)  Not Null, Foreign Key (C_name) references Customer(C_name), Foreign Key (B_name) 
+references Branch(B_name));
+
+Table created.
+
+mysql> desc deposit;
++--------+--------------+------+-----+---------+-------+
+| Field  | Type         | Null | Key | Default | Extra |
++--------+--------------+------+-----+---------+-------+
+| Act_no | varchar(10)  | NO   | PRI | NULL    |       |
+| C_name | varchar(10)  | YES  | MUL | NULL    |       |
+| B_name | varchar(10)  | YES  | MUL | NULL    |       |
+| amount | decimal(8,2) | NO   |     | NULL    |       |
++--------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+
+
+Data for Branch Table
+
+
+SQL> insert into Branch values ('Besu','Kolkata');
+SQL> insert into Branch values('Jadavpur','Kolkata');
+SQL> insert into Branch values ('A Vihar','Delhi');
+SQL> insert into Branch values ('Ashok','Delhi');
+SQL> insert into Branch values ('Bhawan','Mumbai');
+SQL> insert into branch values ('coperative','Mumbai');
+
+SQL> select * from Branch;
+
+B_NAME     CITY
+---------- ----------
+Besu       Kolkata
+Jadavpur   Kolkata
+A Vihar    Delhi
+Ashok      Delhi 
+Bhawan     Mumbai
+coperative Mumbai
+
+6 rows selected.
+
+Data for Customer table 
+
+
+SQL> insert into customer values ('ROHAN','Delhi');
+SQL> insert into customer values ('MANAS','Delhi');
+SQL> insert into customer values ('RANJAN','Mumbai');
+SQL> insert into customer values ('ASHUTOSH','Mumbai');
+SQL> insert into customer values ('SANDIP','Kolkata');
+SQL> insert into customer values ('BORAL','Kolkata');
+SQL> insert into customer values ('AJIT','Delhi');
+SQL> insert into customer values ('ANJALI','Delhi');
+SQL> insert into customer values ('SOHAM','Kolkata');
+SQL> insert into customer values ('RAM','Mumbai');
+
+SQL> select * from customer;
+
+C_NAME     CITY
+---------- ----------
+ROHAN      Delhi
+MANAS      Delhi
+RANJAN     Mumbai
+ASHUTOSH   Mumbai
+SANDIP     Kolkata
+BORAL      Kolkata
+AJIT       Delhi
+ANJALI     Delhi
+SOHAM      Kolkata
+RAM        Mumbai
+
+10 rows selected.
+
+
+Data for Branch Table
+
+mysql> insert into borrow values ('l01','ROHAN','Ashok',109882.00);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into borrow values ('l02','SANDIP','Besu',199882.00);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into borrow values ('l03','SOHAM','Jadavpur',145882.00);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into borrow values ('l04','RAM','Bhawan',135682.00);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into borrow values ('l05','RANJAN','coperative',995682.00);
+
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into borrow values ('l06','AJIT','A Vihar',54682.00);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into borrow values ('l07','MANAS','A Vihar',53382.00);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into borrow values ('l08','ASHUTOSH','Bhawan',993382.00);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into borrow values ('l09','ANJALI','Ashok',197382.00);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into borrow values ('l10','BORAL','Jadavpur',997399.00);
+Query OK, 1 row affected (0.02 sec)
+
+
+mysql> select * from borrow;
++---------+----------+------------+-----------+
+| Loan_No | C_Name   | B_Name     | amount    |
++---------+----------+------------+-----------+
+| l01     | Rohan    | Ashok      | 109882.00 |
+| l02     | Sandip   | Besu       | 199882.00 |
+| l03     | Soham    | Jadavpur   | 145882.00 |
+| l04     | Ram      | Bhawan     | 135682.00 |
+| l05     | Ranjan   | Coperative | 995682.00 |
+| l06     | Ajit     | A vihar    |  54682.00 |
+| l07     | Manas    | A vihar    |  53382.00 |
+| l08     | Ashutosh | Bhawan     | 993382.00 |
+| l09     | Anjali   | Ashok      | 197382.00 |
+| l10     | Boral    | jadavpur   | 997399.00 |
++---------+----------+------------+-----------+
+10 rows in set (0.00 sec)
+
+
+Data for Deposit Table
+
+mysql> insert into Deposit values ('A0079','ROHAN','Ashok',474938.00);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into Deposit values ('A0449','RANJAN','A Vihar',44438.00);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into Deposit values ('A0348','RAM','coperative',44438.00);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into Deposit values ('A0242','AJIT','Bhawan',49298.00);
+Query OK, 1 row affected (0.02 sec)
+mysql> insert into Deposit values ('A0112','MANAS','A Vihar',432298.00);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into Deposit values ('A0640','ASHUTOSH','Bhawan',412258.00);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into Deposit values ('A0541','SOHAM','Besu',212228.00);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into Deposit values ('A0235','SANDIP','Jadavpur',233328.00);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into Deposit values ('A0718','BORAL','Jadavpur',231278.00);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Deposit values ('A0678','ANJALI','Bhawan',2312.00);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into Deposit values ('A0618','RAM','Besu',75658.00);
+
+mysql> insert into Deposit values ('A01278','ROHAN','Bhawan',76574.00);
+
+mysql> insert into Deposit values ('A16378','RANJAN','Jadavpur',99449.00);
+
+mysql> insert into Deposit values ('A2678','ANJALI','Besu',89483.00);
+
+mysql> select * from Deposit;
++--------+----------+------------+-----------+
+| Acc_no | C_name   | B_name     | Amount    |
++--------+----------+------------+-----------+
+| A0079  | ROHAN    | Ashok      | 474938.00 |
+| A0112  | MANAS    | A Vihar    | 432298.00 |
+| A01278 | ROHAN    | Bhawan     |  76574.00 |
+| A0235  | SANDIP   | Jadavpur   | 233328.00 |
+| A0242  | AJIT     | Bhawan     |  49298.00 |
+| A0348  | RAM      | coperative |  44438.00 |
+| A0449  | RANJAN   | A Vihar    |  44438.00 |
+| A0541  | SOHAM    | Besu       | 212228.00 |
+| A0618  | RAM      | Besu       |  75658.00 |
+| A0640  | ASHUTOSH | Bhawan     | 412258.00 |
+| A0678  | ANJALI   | Bhawan     |   2312.00 |
+| A0718  | BORAL    | Jadavpur   | 231278.00 |
+| A16378 | RANJAN   | Jadavpur   |  99449.00 |
+| A2678  | ANJALI   | Besu       |  89483.00 |
++--------+----------+------------+-----------+
+14 rows in set (0.00 sec)
+
+
+
+1. Find the name of the customers living in the city where branch of Anil/Ram is located.
+
+
+SQL> select C_Name from Customer where City IN (select city from Branch where B_name In (select B_Name 
+from deposit where c_Name='RAM'));
+    -> from deposit where c_Name='RAM'));
++----------+
+| C_Name   |
++----------+
+| ASHUTOSH |
+| BORAL    |
+| RAM      |
+| RANJAN   |
+| SANDIP   |
+| SOHAM    |
++----------+
+6 rows in set (0.02 sec)
+
+
+2. Find the name of the customers having the same living city as their branch city.
+
+
+SQL> select distinct C_Name from Customer C join Branch B on C.city=B.city;
+
++----------+
+| C_Name   |
++----------+
+| AJIT     |
+| ANJALI   |
+| ASHUTOSH |
+| BORAL    |
+| MANAS    |
+| RAM      |
+| RANJAN   |
+| ROHAN    |
+| SANDIP   |
+| SOHAM    |
++----------+
+10 rows in set (0.00 sec)
+
+
+3. Find the name of the depositors having amount greater than 5000 and living in the same city as Ravi/RAM.
+
+
+SQL> select D.C_Name from Deposit D join Customer C on D.C_Name =C.C_Name where D.amount>5000 and 
+C.city=(select city from customer where C_Name='RAM') ;
+
++----------+
+| C_Name   |
++----------+
+| ASHUTOSH |
+| RAM      |
+| RAM      |
+| RANJAN   |
+| RANJAN   |
++----------+
+5 rows in set (0.00 sec)
+
+4. List the cities where branches of Anil/RAM or Sunil/ROHAN are located.
+
+
+SQL> select city from Branch B where B.B_name in ( select B_name from Deposit where C_name in ('RAM','ROHAN'));
+
++---------+
+| city    |
++---------+
+| Delhi   |
+| Kolkata |
+| Mumbai  |
+| Mumbai  |
++---------+
+4 rows in set (0.00 sec)
+
+
+
+5. Give the city of customers having same branch city as Raju/RANJAN.
+
+
+
+SQL> SELECT DISTINCT C.City FROM Customer C JOIN Branch B ON C.C_name = 'RANJAN' AND C.City = B.City;
+
++--------+
+| City   |
++--------+
+| Mumbai |
++--------+
+1 row in set (0.00 sec)
+
+
+6. Give the name of the customers who are borrowers and have same branch city as that of Sunil/Ram.
+
+SQL> Select Customer.C_name from Customer, Borrow,Branch where
+    Customer.C_name=Borrow.C_Name and Borrow.B_name=Branch.B_name and Customer.city IN (select city 
+from Branch Where B_name IN (select B_name from Deposit where C_Name='RAM'));
+
++----------+
+| C_name   |
++----------+
+| ASHUTOSH |
+| BORAL    |
+| RAM      |
+| RANJAN   |
+| SANDIP   |
+| SOHAM    |
++----------+
+6 rows in set (0.00 sec)
+
+
+7. List the no. of customers who are depositors as well as borrowers.
+
+SQL> select count(DISTINCT Customer.C_name) from customer,Borrow ,Deposit where
+ Customer.C_name=Borrow.C_name and Customer.C_name=Deposit.C_name;
+
+COUNT(DISTINCTCUSTOMER.C_NAME)
+------------------------------
+                            10
+
+
+8. Find the name of the depositors having deposit in some branches where Sunil/Ram is having account.
+
+SQL> select C_name from Deposit where B_name in (select B_name from deposit where C_name='RAM');
+
++--------+
+| C_name |
++--------+
+| RAM    |
+| SOHAM  |
+| RAM    |
+| ANJALI |
++--------+
+4 rows in set (0.00 sec)
+
+
+
+
+9. Give the name of borrowers whose loan amount is greater than the loan amount of Amar/Ranjan
+
+
+SQL> select customer.C_name from customer , Borrow where Customer.C_name=Borrow.C_name and 
+Borrow.Amount > (select Amount from Borrow where Borrow.c_name='AJIT'); 
+
+
+C_NAME
+----------
+ROHAN
+SANDIP
+SOHAM
+RAM
+RANJAN
+ASHUTOSH
+ANJALI
+BORAL
+
+8 rows selected.
+
+
+10. List the total amount of deposit for the customers living in the city where Ram is living.
+
+SQL> SELECT SUM(amount) AS Total_Deposit
+    FROM deposit
+    WHERE C_name IN (SELECT C_name FROM Customer WHERE 
+    City = (SELECT City FROM Customer WHERE C_name = 'RAM'));
+
+TOTAL_DEPOSIT
+-------------
+       676241
+
+
+11. Give loan amount for each living city of the customers if such loan is greater than 30000.
+
+
+SQL> SELECT C.City, B.amount AS Loan_Amount
+    FROM Customer C
+    JOIN Borrow B ON C.C_name = B.C_name
+    WHERE B.amount > 30000;
+
+CITY       LOAN_AMOUNT
+---------- -----------
+Delhi           109882
+Kolkata         199882
+Kolkata         145882
+Mumbai          135682
+Mumbai          995682
+Delhi            54682
+Delhi            53382
+Mumbai          993382
+Delhi           197382
+Kolkata         997399
+
+10 rows selected.
+
+
+12. Find out the number of depositors having same living city as that of Ram.
+
+
+SQL> 
+SQL> SELECT COUNT(*) AS Depositors_Count
+    FROM deposit D
+    WHERE D.C_name IN (SELECT C.C_name FROM Customer C WHERE C.C_name = 'RAM');
+
+DEPOSITORS_COUNT
+----------------
+               2
+
+
+13. Find the name of the depositors having deposit in the branches where the average deposit is more than 25000.
+
+SQL> 
+SQL> SELECT DISTINCT D.C_name
+    FROM deposit D
+    WHERE D.B_name IN (
+      SELECT B_name
+      FROM Branch
+      GROUP BY B_name
+      HAVING AVG(D.amount) > 25000
+    );
+
+C_NAME
+----------
+SOHAM
+BORAL
+ANJALI
+RANJAN
+ROHAN
+RAM
+AJIT
+MANAS
+SANDIP
+ASHUTOSH
+
+10 rows selected.
+
+14.List the customers who are borrowers or depositors & having living city kol & branch city same as that of Sunil/Ranjan .
+
+SQL> SELECT DISTINCT c.C_name FROM customer c, deposit d, branch b WHERE c.C_name = d.C_name AND d.B_name = b.B_name AND c.City = 'Kolkata' AND b.City IN 
+(SELECT b.City FROM branch b, deposit d WHERE b.B_name = d.B_name AND d.C_name = 'RAM')
+UNION
+SELECT DISTINCT c.C_name FROM customer c, borrow br, branch b WHERE c.C_name = br.C_name AND br.B_name = b.B_name AND c.City = 'Kolkata' AND b.City IN
+(SELECT b.City FROM branch b, borrow br WHERE b.B_name = br.B_name AND br.C_name = 'RAM');
+
++--------+
+| C_name |
++--------+
+| BORAL  |
+| SANDIP |
+| SOHAM  |
++--------+
+3 rows in set (0.00 sec)
+
+15. List the name of the branch having lowest number of borrowers.
+
+mysql> SELECT B_name, COUNT(C_name) AS Borrowers
+    -> FROM borrow
+    -> GROUP BY B_name
+    -> HAVING COUNT(C_name) = (
+    ->     SELECT COUNT_C_name
+    ->     FROM (
+    ->         SELECT COUNT(C_name) as COUNT_C_name
+    ->         FROM borrow
+    ->         GROUP BY B_name
+    ->         ORDER BY COUNT_C_name
+    ->         LIMIT 1
+    ->     ) as temp
+    -> );
++------------+-----------+
+| B_name     | Borrowers |
++------------+-----------+
+| Besu       |         1 |
+| coperative |         1 |
++------------+-----------+
+2 rows in set (0.00 sec)
+
+16. List the name of customers of Delhi having maximum deposit.
+
+
+SQL> SELECT C_name, Amount AS deposit_amount FROM deposit WHERE Amount = (SELECT MAX(Amount) FROM customer c, deposit d WHERE c.C_name = d.C_name AND c.City = 'Delhi');
+
++--------+----------------+
+| C_name | deposit_amount |
++--------+----------------+
+| ROHAN  |      474938.00 |
++--------+----------------+
+1 row in set (0.00 sec)
+
+17. List the name customers in ‘ABC/Ashok’ branch having more deposit than all the customer from
+same branch.
+
+
+SQL> SELECT C_name FROM deposit WHERE Amount = (SELECT MAX(Amount) FROM deposit GROUP BY B_name HAVING B_name = 'Ashok');
+
++--------+
+| C_name |
++--------+
+| ROHAN  |
++--------+
+1 row in set (0.00 sec)
+
+18. Find the account number of depositors having more deposit than the average deposit of
+their respective branches.
+
+SQL> SELECT Acc_no FROM deposit d WHERE Amount > (SELECT AVG(Amount) FROM deposit GROUP BY B_name HAVING d.B_name = B_name);
+
++--------+
+| Acc_no |
++--------+
+| A0112  |
+| A0235  |
+| A0541  |
+| A0640  |
+| A0718  |
++--------+
+5 rows in set (0.00 sec)
+
+19. Find the name of customers living in the city where maximum number of depositors is
+located.
+
+mysql> SELECT C_Name
+    -> FROM Customer
+    -> WHERE City IN (
+    ->     SELECT City
+    ->     FROM Customer c
+    ->     JOIN Deposit d ON c.C_name = d.C_name
+    ->     GROUP BY City
+    ->     HAVING COUNT(d.C_name) = (
+    ->         SELECT COUNT_C_name
+    ->         FROM (
+    ->             SELECT COUNT(d.C_name) as COUNT_C_name
+    ->             FROM Customer c
+    ->             JOIN Deposit d ON c.C_name = d.C_name
+    ->             GROUP BY City
+    ->             ORDER BY COUNT_C_name DESC
+    ->             LIMIT 1
+    ->         ) as temp
+    ->     )
+    -> );
++--------+
+| C_Name |
++--------+
+| AJIT   |
+| ANJALI |
+| MANAS  |
+| ROHAN  |
++--------+
+4 rows in set (0.00 sec)
+
+
+
+20. List the name of the customers having the highest deposit in the city where the branch of
+Sunil is located.
+
+mysql> SELECT C_name FROM Deposit d1 WHERE Amount IN (SELECT MAX(Amount) FROM Deposit d2, Branch b WHERE d2.B_name = b.B_name AND d1.B_name = b.B_name AND b.B_name IN (SELECT B_name FROM Branch WHERE City IN ((SELECT City FROM Branch, Deposit WHERE Branch.B_name = Deposit.B_name AND C_name = 'RAM') UNION (SELECT City FROM Branch, Borrow WHERE Branch.B_name = Borrow.B_name AND C_name = 'RAM'))));
++----------+
+| C_name   |
++----------+
+| SANDIP   |
+| RAM      |
+| SOHAM    |
+| ASHUTOSH |
++----------+
+4 rows in set (0.00 sec)
+
+
+21. Update the deposit amount of the customers by maximum amount of an account holder of
+‘Ashok’ branch if deposit branch city is same as Anil/RAM.
+
+
+SQL>UPDATE deposit d SET Amount = (SELECT MAX(d1.Amount) FROM deposit d1 WHERE d1.B_name = 'Ashok') WHERE d.B_name IN (SELECT d2.B_name FROM deposit d2, branch b 
+WHERE d2.B_name = b.B_name AND b.City = (SELECT b1.City FROM deposit d3, branch b1 WHERE d3.B_name = b1.B_name AND d3.C_name = 'RAM'));
+
+
+mysql> select * from deposit;
++--------+----------+------------+-----------+
+| Acc_no | C_name   | B_name     | Amount    |
++--------+----------+------------+-----------+
+| A0079  | ROHAN    | Ashok      | 474938.00 |
+| A0112  | MANAS    | A Vihar    | 432298.00 |
+| A01278 | ROHAN    | Bhawan     | 474938.00 |
+| A0235  | SANDIP   | Jadavpur   | 474938.00 |
+| A0242  | AJIT     | Bhawan     | 474938.00 |
+| A0348  | RAM      | coperative | 474938.00 |
+| A0449  | RANJAN   | A Vihar    |  44438.00 |
+| A0541  | SOHAM    | Besu       | 474938.00 |
+| A0618  | RAM      | Besu       | 474938.00 |
+| A0640  | ASHUTOSH | Bhawan     | 474938.00 |
+| A0678  | ANJALI   | Bhawan     | 474938.00 |
+| A0718  | BORAL    | Jadavpur   | 474938.00 |
+| A16378 | RANJAN   | Jadavpur   | 474938.00 |
+| A2678  | ANJALI   | Besu       | 474938.00 |
++--------+----------+------------+-----------+
+14 rows in set (0.00 sec)
+
+
+
+22. Transfer Rs. 1000 from the account of Anil/RANJAN to the account of Sunil/RAM if both are living in
+same city.
+SQL> UPDATE deposit d SET Amount = Amount - 1000 WHERE C_name = 'ANIL' AND Amount >= 1000 AND EXISTS (SELECT 1 FROM customer c WHERE d.C_name = c.C_name AND c.City = (SELECT City FROM customer WHERE C_name = 'RANJAN'));
+
+
+
+SQL> UPDATE deposit d SET Amount = Amount + 1000 WHERE C_name = 'SUNIL' AND EXISTS (SELECT 1 FROM customer c WHERE d.C_name = c.C_name AND c.City = (SELECT City FROM customer WHERE C_name = 'RAM'));
+
+
+mysql> select * from deposit;
++--------+----------+------------+-----------+
+| Acc_no | C_name   | B_name     | Amount    |
++--------+----------+------------+-----------+
+| A0079  | ROHAN    | Ashok      | 474938.00 |
+| A0112  | MANAS    | A Vihar    | 432298.00 |
+| A01278 | ROHAN    | Bhawan     | 474938.00 |
+| A0235  | SANDIP   | Jadavpur   | 474938.00 |
+| A0242  | AJIT     | Bhawan     | 474938.00 |
+| A0348  | RAM      | coperative | 474938.00 |
+| A0449  | RANJAN   | A Vihar    |  44438.00 |
+| A0541  | SOHAM    | Besu       | 474938.00 |
+| A0618  | RAM      | Besu       | 474938.00 |
+| A0640  | ASHUTOSH | Bhawan     | 474938.00 |
+| A0678  | ANJALI   | Bhawan     | 474938.00 |
+| A0718  | BORAL    | Jadavpur   | 474938.00 |
+| A16378 | RANJAN   | Jadavpur   | 474938.00 |
+| A2678  | ANJALI   | Besu       | 474938.00 |
++--------+----------+------------+-----------+
+14 rows in set (0.00 sec)
+
+23. Update deposit of Anil/RAM by giving him maximum deposit from depositors living in Kolkata.
+
+SQL> UPDATE deposit d SET Amount = (SELECT MAX(Amount) FROM deposit d1, customer c WHERE d1.C_name =c.C_name AND c.City = 'Kolkata') WHERE C_name = 'RAM';
+
+
+mysql> select * from deposit;
++--------+----------+------------+-----------+
+| Acc_no | C_name   | B_name     | Amount    |
++--------+----------+------------+-----------+
+| A0079  | ROHAN    | Ashok      | 474938.00 |
+| A0112  | MANAS    | A Vihar    | 432298.00 |
+| A01278 | ROHAN    | Bhawan     | 474938.00 |
+| A0235  | SANDIP   | Jadavpur   | 474938.00 |
+| A0242  | AJIT     | Bhawan     | 474938.00 |
+| A0348  | RAM      | coperative | 474938.00 |
+| A0449  | RANJAN   | A Vihar    |  44438.00 |
+| A0541  | SOHAM    | Besu       | 474938.00 |
+| A0618  | RAM      | Besu       | 474938.00 |
+| A0640  | ASHUTOSH | Bhawan     | 474938.00 |
+| A0678  | ANJALI   | Bhawan     | 474938.00 |
+| A0718  | BORAL    | Jadavpur   | 474938.00 |
+| A16378 | RANJAN   | Jadavpur   | 474938.00 |
+| A2678  | ANJALI   | Besu       | 474938.00 |
++--------+----------+------------+-----------+
+14 rows in set (0.00 sec)
+
+
+24 Add Rs.1000 to the account of those depositors who are having highest deposit amount in
+their respective branches.
+
+
+SQL> UPDATE deposit d SET Amount = Amount + 1000 WHERE Amount = ( SELECT  MAX(Amount) FROM deposit d1 GROUP BY B_name HAVING d.B_name = d1.B_name);
+
+mysql> select * from deposit;
++--------+----------+------------+-----------+
+| Acc_no | C_name   | B_name     | Amount    |
++--------+----------+------------+-----------+
+| A0079  | ROHAN    | Ashok      | 475938.00 |
+| A0112  | MANAS    | A Vihar    | 433298.00 |
+| A01278 | ROHAN    | Bhawan     | 475938.00 |
+| A0235  | SANDIP   | Jadavpur   | 475938.00 |
+| A0242  | AJIT     | Bhawan     | 475938.00 |
+| A0348  | RAM      | coperative | 475938.00 |
+| A0449  | RANJAN   | A Vihar    |  45438.00 |
+| A0541  | SOHAM    | Besu       | 475938.00 |
+| A0618  | RAM      | Besu       | 475938.00 |
+| A0640  | ASHUTOSH | Bhawan     | 475938.00 |
+| A0678  | ANJALI   | Bhawan     | 475938.00 |
+| A0718  | BORAL    | Jadavpur   | 475938.00 |
+| A16378 | RANJAN   | Jadavpur   | 475938.00 |
+| A2678  | ANJALI   | Besu       | 475938.00 |
++--------+----------+------------+-----------+
+14 rows in set (0.00 sec)
+
+
+
+
+25. Delete loan account of borrowers if the loan amount is minimum of their respective
+branches.
+
+SQL>DELETE FROM borrow b WHERE Amount = (SELECT Min(Amount) FROM borrow b1 GROUP BY B_name HAVING b.B_name = b1.B_name);
+
+
+mysql> select * from borrow;
++--------+----------+----------+-----------+
+| Acc_no | C_name   | B_name   | Amount    |
++--------+----------+----------+-----------+
+| l06    | AJIT     | A Vihar  |  54682.00 |
+| l08    | ASHUTOSH | Bhawan   | 993382.00 |
+| l09    | ANJALI   | Ashok    | 197382.00 |
+| l10    | BORAL    | Jadavpur | 997399.00 |
++--------+----------+----------+-----------+
+4 rows in set (0.00 sec)
+
+
+26. Delete the borrower of branches having minimum number of customers.
+
+
+SQL>DELETE FROM borrow b WHERE b.B_name IN (SELECT B_name FROM borrow GROUP BY B_name HAVING Count(B_name)=(SELECT Min(Count(B_name)) FROM borrow GROUP BY B_name));
+
+
+mysql> select * from borrow;
+Empty set (0.00 sec)
+
+

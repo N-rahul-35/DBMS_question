@@ -1,7 +1,7 @@
-Assignment -2
+
 Name - Rahul kumar Chaudhary
 
-Roll-No- 2021ITB074
+
 
 
 SQL> Create Table Branch (B_name varchar(10) Primary Key, 
